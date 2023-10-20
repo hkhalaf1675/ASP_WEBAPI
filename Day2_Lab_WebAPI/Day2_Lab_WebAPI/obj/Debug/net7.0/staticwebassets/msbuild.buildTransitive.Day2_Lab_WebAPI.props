@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\buildMultiTargeting\Day2_Lab_WebAPI.props" />
+</Project>

@@ -1,0 +1,35 @@
+﻿<!--to call api request can do that by ajax-->
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("button").click(function () {
+                $.ajax({
+                    url: "/api/Department/All",
+                    dataType:"Json",
+                    success: function (result) {
+                        //$("#div1").html(result);
+                        //for (let i in result) {
+                        //    result
+                        //    document.getElementById("div1").innerHTML += i.id;
+                        //}
+                        for (let i = 0; i < result.length; i++) {
+                            console.log(result[i]);
+                            document.getElementById("div1").innerHTML += result[i].name + "<br />";
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+
+    <div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
+
+    <button>Get External Content</button>
+
+</body>
+</html>

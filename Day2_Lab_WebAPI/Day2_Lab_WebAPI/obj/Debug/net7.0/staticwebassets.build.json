@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "Hash": "WEXoULTQE24YGM1BJtis3OAcwgF7jF6/9R+sivFJdAo=",
+  "Source": "Day2_Lab_WebAPI",
+  "BasePath": "_content/Day2_Lab_WebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Day2_Lab_WebAPI\\wwwroot",
+      "Source": "Day2_Lab_WebAPI",
+      "ContentRoot": "F:\\Education\\C sharp\\CSharpSoluations\\Web_API\\Day2_Lab_WebAPI\\Day2_Lab_WebAPI\\wwwroot\\",
+      "BasePath": "_content/Day2_Lab_WebAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "F:\\Education\\C sharp\\CSharpSoluations\\Web_API\\Day2_Lab_WebAPI\\Day2_Lab_WebAPI\\wwwroot\\HtmlPages\\DepartmentDetails.html",
+      "SourceId": "Day2_Lab_WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "F:\\Education\\C sharp\\CSharpSoluations\\Web_API\\Day2_Lab_WebAPI\\Day2_Lab_WebAPI\\wwwroot\\",
+      "BasePath": "_content/Day2_Lab_WebAPI",
+      "RelativePath": "HtmlPages/DepartmentDetails.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\HtmlPages\\DepartmentDetails.html"
+    }
+  ]
+}
