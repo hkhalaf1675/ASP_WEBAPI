@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "49NdHeOHOqlxl1D8vcOgo7T9kAm5P9Sd2V7uenB6mE59ZyNlmNrJzKR1wlBAd42zyXtMsCAHVikQsGeQLms77w==",
+  "success": true,
+  "projectFilePath": "F:\\Education\\C sharp\\ASP_WEBAPI\\PayPal_Integration\\PayPal_Integration\\PayPal_Integration.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\LENOVO\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

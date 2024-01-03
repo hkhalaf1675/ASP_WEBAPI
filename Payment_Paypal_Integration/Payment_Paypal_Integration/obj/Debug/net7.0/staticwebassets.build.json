@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "dPbgsEOEVCFnd+nxY0+4r2WY4BJ9mAVqRDBFC3ldDEU=",
+  "Source": "Payment_Paypal_Integration",
+  "BasePath": "_content/Payment_Paypal_Integration",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

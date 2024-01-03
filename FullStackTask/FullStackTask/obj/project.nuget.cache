@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Pn3DADyVoBL/TwEnJfFT6RJxOa45o9ZbHNnAte4KN1kAmLRYOxwk4KFmzBnE5AaxkfEgEt2bHNZzHjShlKdCPA==",
+  "dgSpecHash": "jMcRhv09p52QMj9kgoaDWJ5wryFGPlKrh83MHYxpAw4J1R5etc+OJNQnPlgU6G3msIHQ00K/Jxlg2w0Yn+ppzg==",
   "success": true,
-  "projectFilePath": "F:\\Education\\C sharp\\CSharpSoluations\\Web_API\\FullStackTask\\FullStackTask\\FullStackTask.csproj",
+  "projectFilePath": "F:\\Education\\C sharp\\ASP_WEBAPI\\FullStackTask\\FullStackTask\\FullStackTask.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\LENOVO\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\LENOVO\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Sending_Email.props" />
+</Project>
