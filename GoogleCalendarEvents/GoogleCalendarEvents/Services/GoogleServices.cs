@@ -67,7 +67,7 @@ namespace GoogleCalendarEvents.Services
             
         }
 
-        public async Task<ResponseMessageDto?> AddCalendarEvent(EventRequestDto eventDto)
+        public async Task<ResponseMessageDto?> AddCalendarEventAsync(EventRequestDto eventDto)
         {
             Event newEvent = new Event()
             {
@@ -135,7 +135,7 @@ namespace GoogleCalendarEvents.Services
             }
         }
 
-        public async Task<EventResponseDto?> GetCalendarEventById(string id)
+        public async Task<EventResponseDto?> GetCalendarEventByIdAsync(string id)
         {
             EventResponseDto eventDto;
 
@@ -155,7 +155,7 @@ namespace GoogleCalendarEvents.Services
             }
         }
 
-        public async Task<ResponseMessageDto> DeleteCalendarEvent(string id)
+        public async Task<ResponseMessageDto> DeleteCalendarEventAsync(string id)
         {
             CalendarService service = await GetCalendarServiceAsync();
 
@@ -179,7 +179,7 @@ namespace GoogleCalendarEvents.Services
             }
         }
 
-        public async Task<List<EventResponseDto>> SearchCalendarEvents(QueryParamsDto queryParams)
+        public async Task<List<EventResponseDto>> SearchCalendarEventsAsync(QueryParamsDto queryParams)
         {
             List<EventResponseDto> events = new List<EventResponseDto>();
 

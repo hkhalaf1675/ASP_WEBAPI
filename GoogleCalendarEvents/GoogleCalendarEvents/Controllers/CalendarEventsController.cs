@@ -44,7 +44,7 @@ namespace GoogleCalendarEvents.Controllers
                 return BadRequest(ModelState);
             }
 
-            ResponseMessageDto response = await googleServices.AddCalendarEvent(eventDto);
+            ResponseMessageDto response = await googleServices.AddCalendarEventAsync(eventDto);
 
             if (response.IsJobDone)
             {
@@ -65,7 +65,7 @@ namespace GoogleCalendarEvents.Controllers
         [HttpGet("get-event-by-id")]
         public async Task<IActionResult> GetCalendarEventById(string eventId)
         {
-            EventResponseDto? targetEvent = await googleServices.GetCalendarEventById(eventId);
+            EventResponseDto? targetEvent = await googleServices.GetCalendarEventByIdAsync(eventId);
 
             if (targetEvent == null)
                 return NotFound("There is no events with that id");
@@ -76,7 +76,7 @@ namespace GoogleCalendarEvents.Controllers
         [HttpDelete("delete-event")]
         public async Task<IActionResult> DeleteCalendarEvent(string eventId)
         {
-            ResponseMessageDto response = await googleServices.DeleteCalendarEvent(eventId);
+            ResponseMessageDto response = await googleServices.DeleteCalendarEventAsync(eventId);
 
             if (response.IsJobDone)
                 return Ok(response.Message);
@@ -87,7 +87,7 @@ namespace GoogleCalendarEvents.Controllers
         [HttpGet("search-event")]
         public async Task<IActionResult> SearchCalendarEvents([FromQuery]QueryParamsDto queryParams)
         {
-            var response = await googleServices.SearchCalendarEvents(queryParams);
+            var response = await googleServices.SearchCalendarEventsAsync(queryParams);
             return Ok(response);
         }
     }

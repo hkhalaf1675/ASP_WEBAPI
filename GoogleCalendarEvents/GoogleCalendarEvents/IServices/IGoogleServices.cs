@@ -8,10 +8,10 @@ namespace GoogleCalendarEvents.IServices
     {
         Task<TokenResponse?> GetTokenAsync();
         Task<CalendarService> GetCalendarServiceAsync();
-        Task<ResponseMessageDto?> AddCalendarEvent(EventRequestDto eventDto);
+        Task<ResponseMessageDto?> AddCalendarEventAsync(EventRequestDto eventDto);
         Task<List<EventResponseDto>> GetAllCalendarEventsAsync();
-        Task<EventResponseDto?> GetCalendarEventById(string id);
-        Task<ResponseMessageDto> DeleteCalendarEvent(string id);
-        Task<List<EventResponseDto>> SearchCalendarEvents(QueryParamsDto queryParams);
+        Task<EventResponseDto?> GetCalendarEventByIdAsync(string id);
+        Task<ResponseMessageDto> DeleteCalendarEventAsync(string id);
+        Task<List<EventResponseDto>> SearchCalendarEventsAsync(QueryParamsDto queryParams);
     }
 }
