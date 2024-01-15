@@ -4,7 +4,7 @@ namespace DB_Assigment.IRepository
 {
     public interface IAuthRepository
     {
-        Task<AuthDto> Register(RegisterDto registerDto);
-        Task<AuthDto> Login(LoginDto loginDto);
+        Task<AuthResponseDto> RegisterAsync(RegisterDto registerDto);
+        Task<AuthResponseDto> LoginAsync(LoginDto loginDto);
     }
 }

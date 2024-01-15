@@ -16,7 +16,7 @@ namespace DB_Assigment.Controllers
             authRepository = _authRepository;
         }
 
-        [HttpPost("Register")]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterDto registerDto)
         {
             if(!ModelState.IsValid)
@@ -24,7 +24,7 @@ namespace DB_Assigment.Controllers
                 return BadRequest(ModelState);
             }
 
-            AuthDto authDto = await authRepository.Register(registerDto);
+            AuthResponseDto authDto = await authRepository.RegisterAsync(registerDto);
 
             if(authDto.Message != null)
             {
@@ -34,16 +34,18 @@ namespace DB_Assigment.Controllers
             return Ok(authDto.Token);
         }
 
-        [HttpPost("Login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginDto loginDto)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            AuthDto authDto = await authRepository.Login(loginDto);
+            AuthResponseDto authDto = await authRepository.LoginAsync(loginDto);
 
             if(authDto.Message != null)
+            {
                 return BadRequest($"{authDto.Message}");
+            }
 
             return Ok(authDto.Token);
         }

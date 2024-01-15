@@ -10,13 +10,13 @@ namespace DB_Assigment.Contexts
         {}
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // make the code primary key of the product table
-            builder.Entity<Product>().HasKey(P => P.Code);
+            // make the book code primary key
+            builder.Entity<Book>().HasKey(B => B.Code);
 
             base.OnModelCreating(builder);
         }
 
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Product> Products { get; set; }
+        public DbSet<Book> Books { get; set; }
+        public DbSet<BorrowingHistory> BorrowingHistories { get; set; }
     }
 }

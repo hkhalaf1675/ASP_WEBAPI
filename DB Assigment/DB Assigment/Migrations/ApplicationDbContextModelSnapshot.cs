@@ -22,7 +22,30 @@ namespace DB_Assigment.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DB_Assigment.Models.Category", b =>
+            modelBuilder.Entity("DB_Assigment.Models.Book", b =>
+                {
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Author")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Code");
+
+                    b.ToTable("Books");
+                });
+
+            modelBuilder.Entity("DB_Assigment.Models.BorrowingHistory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,44 +53,27 @@ namespace DB_Assigment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Name")
+                    b.Property<string>("BookCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("BorrowDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("ReturnDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
-                });
+                    b.HasIndex("BookCode");
 
-            modelBuilder.Entity("DB_Assigment.Models.Product", b =>
-                {
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasIndex("UserId");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<float?>("DiscoundRate")
-                        .HasColumnType("real");
-
-                    b.Property<string>("ImageName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("MinQuantity")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Code");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("Products");
+                    b.ToTable("BorrowingHistories");
                 });
 
             modelBuilder.Entity("DB_Assigment.Models.User", b =>
@@ -77,9 +83,6 @@ namespace DB_Assigment.Migrations
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
-
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -93,6 +96,7 @@ namespace DB_Assigment.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
@@ -274,52 +278,23 @@ namespace DB_Assigment.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DB_Assigment.Models.Product", b =>
+            modelBuilder.Entity("DB_Assigment.Models.BorrowingHistory", b =>
                 {
-                    b.HasOne("DB_Assigment.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
+                    b.HasOne("DB_Assigment.Models.Book", "Book")
+                        .WithMany("BorrowingHistories")
+                        .HasForeignKey("BookCode")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Category");
-                });
+                    b.HasOne("DB_Assigment.Models.User", "User")
+                        .WithMany("BorrowingHistories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-            modelBuilder.Entity("DB_Assigment.Models.User", b =>
-                {
-                    b.OwnsMany("DB_Assigment.Models.RefreshToken", "RefreshTokens", b1 =>
-                        {
-                            b1.Property<string>("UserId")
-                                .HasColumnType("nvarchar(450)");
+                    b.Navigation("Book");
 
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("int");
-
-                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
-
-                            b1.Property<DateTime>("CreatedOn")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<DateTime>("ExpiresOn")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<DateTime?>("RevokedOn")
-                                .HasColumnType("datetime2");
-
-                            b1.Property<string>("Token")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.HasKey("UserId", "Id");
-
-                            b1.ToTable("RefreshToken");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.Navigation("RefreshTokens");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -373,9 +348,14 @@ namespace DB_Assigment.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DB_Assigment.Models.Category", b =>
+            modelBuilder.Entity("DB_Assigment.Models.Book", b =>
                 {
-                    b.Navigation("Products");
+                    b.Navigation("BorrowingHistories");
+                });
+
+            modelBuilder.Entity("DB_Assigment.Models.User", b =>
+                {
+                    b.Navigation("BorrowingHistories");
                 });
 #pragma warning restore 612, 618
         }

@@ -23,21 +23,21 @@ namespace DB_Assigment.Repositories
             configuration = _configuration;
         }
 
-        public async Task<AuthDto> Register(RegisterDto registerDto)
+        public async Task<AuthResponseDto> RegisterAsync(RegisterDto registerDto)
         {
             if(await userManager.FindByEmailAsync(registerDto.Email) != null)
             {
-                return new AuthDto
+                return new AuthResponseDto
                 {
-                    Message = "That Email is already exists"
+                    Message = "That Email or Username is already exists"
                 };
             }
 
             if(await userManager.FindByNameAsync(registerDto.UserName) != null)
             {
-                return new AuthDto
+                return new AuthResponseDto
                 {
-                    Message = "that username is already exists"
+                    Message = "That Email or Username is already exists"
                 };
             }
 
@@ -57,17 +57,17 @@ namespace DB_Assigment.Repositories
                 {
                     errors += $"{error.Description}";
                 }
-                return new AuthDto
+                return new AuthResponseDto
                 {
                     Message = errors
                 };
             }
 
             // check if the role exists or not
-            bool checkRoleExists = await EnsureRoleExists("Clinet");
+            bool checkRoleExists = await EnsureRoleExistsAsync("Client");
             if (!checkRoleExists)
             {
-                return new AuthDto
+                return new AuthResponseDto
                 {
                     Message = "Error on create Role"
                 };
@@ -77,93 +77,69 @@ namespace DB_Assigment.Repositories
             await userManager.AddToRoleAsync(user, "Client");
 
             // call the method that create the token
-            var token = await CreateJwtToken(user);
+            var token = await CreateJwtTokenAsync(user);
 
             if (token == null)
             {
-                return new AuthDto
+                return new AuthResponseDto
                 {
                     Message = "Error on Jwt Token Creation"
                 };
             }
 
-            // check of refresh token
-            var refreshToken = await EnsureRefreshTokenExists(user);
-
-            if(refreshToken is null)
+            return new AuthResponseDto
             {
-                return new AuthDto
-                {
-                    Message = "Error on Refresh Token Creation"
-                };
-            }
-
-            return new AuthDto
-            {
-                Token = token,
-                RefershToken = refreshToken.Token,
-                RefreshTokenExpiration = refreshToken.ExpiresOn
+                Token = token
             };
         }
 
-        public async Task<AuthDto> Login(LoginDto loginDto)
+        public async Task<AuthResponseDto> LoginAsync(LoginDto loginDto)
         {
             User? user = await userManager.FindByEmailAsync(loginDto.Email);
             if(user == null)
             {
-                return new AuthDto
+                return new AuthResponseDto
                 {
                     Message = "The email or password is not correct"
                 };
+
             }
 
             bool found = await userManager.CheckPasswordAsync(user, loginDto.Password);
 
             if (!found)
             {
-                return new AuthDto
+                return new AuthResponseDto
                 {
                     Message = "the email or password is not correct"
                 };
             }
 
             // call the method that create token
-            var token = await CreateJwtToken(user);
+            var token = await CreateJwtTokenAsync(user);
 
             if(token is null)
             {
-                return new AuthDto
+                return new AuthResponseDto
                 {
                     Message = "error on jwt token creation"
                 };
             }
 
-            // check of refresh token
-            var refreshToken = await EnsureRefreshTokenExists(user);
-
-            if (refreshToken is null)
+            return new AuthResponseDto
             {
-                return new AuthDto
-                {
-                    Message = "Error on Refresh Token Creation"
-                };
-            }
-
-            return new AuthDto
-            {
-                Token = token,
-                RefershToken = refreshToken.Token,
-                RefreshTokenExpiration = refreshToken.ExpiresOn
+                Token = token
             };
         }
 
-        private async Task<string?> CreateJwtToken(User user)
+        private async Task<string?> CreateJwtTokenAsync(User user)
         {
             // get and add the claims
             List<Claim> claims = new List<Claim>();
 
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti,Guid.NewGuid().ToString()));
             claims.Add(new Claim("UserName",user.UserName));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
             var roles = await userManager.GetRolesAsync(user);
             foreach(var role in roles)
@@ -189,40 +165,7 @@ namespace DB_Assigment.Repositories
             return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
         }
 
-        private async Task<RefreshToken> GenerateRefreshToken()
-        {
-            // generate the refreshToken
-            var randomNumber = new byte[32];
-            using var generator = new RNGCryptoServiceProvider();
-            generator.GetBytes(randomNumber);
-
-            return new RefreshToken
-            {
-                Token = Convert.ToBase64String(randomNumber),
-                ExpiresOn = DateTime.UtcNow.AddMinutes(configuration.GetValue<double>("JWT:DurationInMinutes"))
-            };
-        }
-
-        private async Task<RefreshToken?> EnsureRefreshTokenExists(User user)
-        {
-            if(user.RefreshTokens.Any(t => t.IsActive))
-            {
-                return user.RefreshTokens.FirstOrDefault(t => t.IsActive);
-            }
-
-            var refreshToken = await GenerateRefreshToken();
-            user.RefreshTokens.Add(refreshToken);
-
-            var result = await userManager.UpdateAsync(user);
-            if(!result.Succeeded)
-            {
-                return null;
-            }
-
-            return refreshToken;
-        }
-
-        private async Task<bool> EnsureRoleExists(string role)
+        private async Task<bool> EnsureRoleExistsAsync(string role)
         {
             if (await roleManager.RoleExistsAsync(role) == false)
             {

@@ -81,3 +81,4 @@ F:\Education\C sharp\ASP_WEBAPI\DB Assigment\DB Assigment\bin\Debug\net7.0\runti
 F:\Education\C sharp\ASP_WEBAPI\DB Assigment\DB Assigment\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 F:\Education\C sharp\ASP_WEBAPI\DB Assigment\DB Assigment\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 F:\Education\C sharp\ASP_WEBAPI\DB Assigment\DB Assigment\bin\Debug\net7.0\Newtonsoft.Json.dll
+F:\Education\C sharp\ASP_WEBAPI\DB Assigment\DB Assigment\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
